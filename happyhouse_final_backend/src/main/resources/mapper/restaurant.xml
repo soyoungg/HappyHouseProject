@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.RestaurantRepo">
+
+	<resultMap id="topAddr" type="String">
+		<result property="addr" column="addr"/>
+	</resultMap>
+	
+	<resultMap id="top" type="map">
+		<result property="cnt" column="cnt"/>
+		<result property="addr" column="addr"/>
+	</resultMap>
+	
+	<resultMap id="topRegion" type="Restaurant">
+		<result property="restaurant_id" column="restaurant_id"/>
+		<result property="restaurant_name" column="restaurant_name"/>
+		<result property="restaurant_type" column="restaurant_type"/>
+		<result property="restaurant_address" column="restaurant_address"/>
+	</resultMap>
+	
+	<!-- top 5 -->
+	<select id="topRestaurant" resultMap="top">
+		SELECT SUBSTRING_INDEX(restaurant_address, ' ', 2) AS addr,COUNT(*) AS cnt  
+		FROM restaurant 
+		GROUP BY SUBSTRING_INDEX(restaurant_address, ' ', 2)
+		ORDER BY COUNT(*) DESC 
+		LIMIT 5; 
+	</select>
+	
+	
+	<!-- top 5 중 하나 선택하면 해당하는 군구에 있는 음식점 모두 출력 -->
+	<select id="listRestaurant" parameterType="String" resultMap="topRegion"> 
+		SELECT restaurant_id, restaurant_name, restaurant_type, restaurant_address
+		FROM restaurant
+		WHERE restaurant_address LIKE '%${restaurant_address}%' 
+		LIMIT 50; 
+	</select>
+
+</mapper>

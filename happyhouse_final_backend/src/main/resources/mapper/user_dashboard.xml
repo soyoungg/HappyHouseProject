@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.UserDashboardRepo">
+	
+	<resultMap id="pc" type="map">
+		<result property="hd.dealamount" column="hd.dealamount"/>
+		<result property="hd.aptname" column="hd.aptname"/>
+	</resultMap>
+	
+	<resultMap type="viewApart" id="priceChange">
+			<result property="hd.aptname" column="hd.aptname"/>
+			<result property="hd.dealyear" column="hd.dealyear"/>
+			<result property="hd.dealmonth" column="hd.dealmonth"/>
+			<result property="hd.dealday" column="hd.dealday"/>
+			<result property="hd.dealamount" column="hd.dealamount"/>
+			<result property="hd.buildyear" column="hd.buildyear"/>
+			<result property="hd.area" column="hd.area"/>
+			<result property="hd.floor" column="hd.floor"/>
+	</resultMap>
+
+	
+	<!-- 사용자가 즐겨찾기한 매물의 가격 변동을 꺾은선그래프 -->
+	<select id="priceChange" parameterType="map" resultMap="priceChange">
+		SELECT hd.aptname, hd.dealyear,hd.dealmonth, hd.dealday, hd.dealamount, hd.buildyear, hd.area, hd.floor
+		FROM housedeal AS hd, (SELECT housedeal.aptname
+							FROM housedeal LEFT JOIN favorite
+                            ON housedeal.no = favorite.deal_no
+                            WHERE favorite.user_id=#{user_id}) AS temp
+		WHERE hd.aptname = temp.aptname and hd.aptname = #{aptname}
+		ORDER BY hd.aptname
+	</select>
+</mapper>

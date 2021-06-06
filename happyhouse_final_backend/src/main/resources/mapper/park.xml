@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.ParkRepo">
+	
+	
+	<resultMap id="topCity" type="map">
+		<result property="addr" column="addr"/>
+		<result property="cnt" column="cnt"/>
+	</resultMap>
+	
+
+	
+	<resultMap id="topRegion" type="Park">
+		<result property="park_id" column="park_id"/> 
+		<result property="park_name" column="park_name"/>
+		<result property="park_address" column="park_address"/>
+		<result property="latitude" column="latitude"/>
+		<result property="longtitude" column="longtitude"/>
+	</resultMap>
+	
+	<!-- 전국에서  top 5-->
+	<select id="topPark" resultMap="topCity">
+		SELECT DISTINCT SUBSTRING_INDEX(park_address, ' ', 3) AS addr, COUNT(*) AS cnt 
+		FROM park 
+		GROUP BY SUBSTRING_INDEX(park_address, ' ', 3)
+        order by cnt DESC
+		LIMIT 5;	
+	</select>
+	
+	<!--해당 지역의 공원 불러오기 -->
+	<select id="listPark" resultMap="topRegion" >
+		SELECT park_id, park_name, park_address, latitude, longtitude
+		FROM park
+		WHERE park_address Like '%${park_address}%' 
+	</select>
+</mapper>

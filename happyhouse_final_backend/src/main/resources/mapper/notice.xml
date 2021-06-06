@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.NoticeRepo">
+	<!-- 공지 사항 등록 -->
+	<insert id="writeNotice" parameterType="Notice">
+		 INSERT INTO notice(notice_type, notice_no, notice_title, notice_author, notice_content, notice_date)
+		 VALUES (#{notice_type}, #{notice_no}, #{notice_title}, #{notice_author}, #{notice_content}, #{notice_date})
+	</insert>
+	<!-- 공지 사항 수정 -->
+	<update id="modifyNotice" parameterType="Notice">
+		UPDATE notice SET
+			notice_type = #{notice_type}
+	        ,notice_title = #{notice_title}
+	       ,notice_author = #{notice_author}
+	        ,notice_content = #{notice_content}
+	        ,notice_date = #{notice_date}
+			WHERE notice_no = #{notice_no}
+	</update>
+	<!-- 공지 사항 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		DELETE FROM notice
+		WHERE notice_no = #{notice_no}
+	</delete>
+	<!-- 공지 사항 상세 보기 -->
+	<select id="getNotice" parameterType="int" resultType="Notice">
+		SELECT notice_type, notice_no, notice_title, notice_author, notice_content, notice_date
+		FROM notice
+		WHERE notice_no = #{notice_no}
+	</select>
+	<!-- 페이지 -->
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(notice_no)
+		FROM notice
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				where subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				where ${key} = #{word}
+			</if>
+		</if>
+	</select>
+	<!-- 목록 -->
+	<select id="listNotice" resultType="Notice">
+		SELECT * FROM notice
+		ORDER BY notice_no DESC
+	</select>
+	
+	<select id="listNoticewp" resultType="Notice">
+		SELECT * FROM notice
+		ORDER BY notice_no DESC
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	
+</mapper>

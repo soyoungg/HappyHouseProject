@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.AnswerRepo">
+
+	<!-- 자유게시판 댓글 등록 -->
+	<insert id="writeAnswer" parameterType="Answer">
+		INSERT INTO answer(qna_no, answer_author, answer_date, answer_content)
+		VALUES (#{qna_no}, #{answer_author}, #{answer_date}, #{answer_content})
+	</insert>
+	<!-- 자유게시판 댓글 수정 -->
+	<update id="modifyAnswer" parameterType="Answer">
+		UPDATE answer SET
+			answer_author = #{answer_author}
+			,answer_date = #{answer_date}
+			,answer_content = #{answer_content}
+			WHERE answer_no = #{answer_no}
+	</update>
+	<!-- 자유게시판 댓글 삭제 -->
+	<delete id="deleteAnswer" parameterType="int">
+		DELETE FROM answer
+		WHERE answer_no = #{answer_no}	
+	</delete>
+	
+	<!-- 자유게시판 댓글 목록-->
+	<select id="listAnswer" parameterType="int" resultType="Answer">
+		SELECT answer_no, qna_no, answer_author, answer_date, answer_content
+		FROM answer
+		WHERE qna_no = #{qna_no}
+	</select>
+	
+	<!-- 페이지 -->
+	<select id="getAnswerTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(answer_no)
+		FROM answer
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				where subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				where ${key} = #{word}
+			</if>
+		</if>
+	</select>
+
+</mapper>

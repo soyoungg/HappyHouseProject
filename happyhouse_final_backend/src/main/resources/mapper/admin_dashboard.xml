@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.AdminDashboardRepo">
+	
+	<resultMap type="map" id="user_sex">
+		<result property="user_sex" column="user_sex"/>
+		<result property="us" column="us"/>
+	</resultMap>
+	
+	<resultMap type="map" id="user_age">
+		<result property="age" column="age"/>
+		<result property="us" column="us"/>
+	</resultMap>
+	
+	<resultMap type="map" id="user_favorite">
+		<result property="cnt" column="cnt"/>
+		<result property="aptname" column="aptname"/>
+	</resultMap>
+
+
+	<!-- 성별사용자 수 세기  -->
+	<select id="countByUserSex" resultMap="user_sex">
+		SELECT user_sex, COUNT(user_sex) as us
+		FROM user
+		GROUP BY user_sex
+	</select>
+	
+	<!-- 사용자  연령-->
+	<select id="countByUserAge" resultMap="user_age">
+		SELECT 
+			CASE WHEN (user_age) <![CDATA[<]]> 10 THEN '1-9'
+			     WHEN (user_age) <![CDATA[<]]> 20 THEN '10-19'
+			     WHEN (user_age) <![CDATA[<]]> 30 THEN '20-29'
+			     WHEN (user_age) <![CDATA[<]]> 40 THEN '30-39'
+			     WHEN (user_age) <![CDATA[<]]> 50 THEN '40-49'
+			     WHEN (user_age) <![CDATA[<]]> 60 THEN '50-59'
+			     WHEN (user_age) <![CDATA[<]]> 70 THEN '60-69'
+			     WHEN (user_age) <![CDATA[<]]> 80 THEN '70-79'
+			     WHEN (user_age) <![CDATA[<]]> 90 THEN '80-89'
+			     WHEN (user_age) <![CDATA[<]]> 100 THEN '90-99' END AS age,
+			COUNT(*) total
+			FROM user
+			GROUP BY age;
+	</select>
+	
+	<!-- 사용자 즐겨찾기한 아파트  -->
+	<select id="countApt" resultMap="user_favorite">
+		SELECT count(*) as cnt, aptname 
+		FROM housedeal, favorite
+		WHERE housedeal.no = favorite.deal_no
+		GROUP BY housedeal.aptname;
+	</select>
+</mapper>

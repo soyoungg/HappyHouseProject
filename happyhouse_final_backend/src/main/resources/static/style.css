@@ -1,0 +1,233 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+a {
+	color : black !important;
+	text-decoration : none;
+}
+
+ul, 
+ol,
+li {
+	list-style-type : none;
+	padding-left : 0;
+	margin-left : 0;
+}
+
+/*index.jsp*/
+
+/*상단*/
+.wrap {
+	height : 100%;
+	min-width: 630px;
+}
+
+.nav {
+	display : flex;
+	justify-content : space-between;
+	height: 100px;
+	padding : 30px 50px 20px !important;
+	font-size : 22px;
+}
+
+.lists {
+	display : flex;
+}
+
+.lists li {
+	margin-right : 10px;
+}
+
+.main-img {
+	width: 60%;
+	height: 100%;
+	background-color: yellow;
+	margin: 15px 0;
+}
+.search a{
+	font-size: 20px;
+	margin: 10px;
+}
+
+.navlist li {
+	background-color : lavender;
+	border-radius : 20px;
+	padding: 5px 10px;
+}
+
+/*중단*/
+.main-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items : center;
+	height: 500px;
+}
+
+/*하단*/
+.foot {
+	display: flex;
+	justify-content : flex-end;
+}
+
+/*login.jsp*/
+
+.login-container,
+.find-container {
+	padding: 30px 0;
+}
+
+.login-form,
+.find-form {
+	width: 50%;
+	margin: auto;
+}
+
+#loginform input,
+#findform input {
+	margin-bottom: 15px;
+}
+
+#loginform label,
+#findform label {
+	margin-bottom: 10px;
+}
+
+.find-pwd {
+	display: block;
+	margin-top : 15px;
+}
+
+/*regist.jsp*/
+
+.regist-container {
+	padding: 30px 0;
+}
+
+.regist-form {
+	width: 70%;
+	margin: auto;
+}
+
+#memberform input {
+	margin-bottom: 15px;
+}
+
+#memberform label {
+	margin-bottom: 10px;
+}
+
+/*mypage.jsp*/
+.mypage-li {
+	display: flex;
+	flex-direction : column;
+	justify-content: center;
+	align-items: center;
+}
+
+.mypage-li h4 {
+	margin: 10px 0;
+}
+
+.mypage-mv{
+	margin : 30px 0;
+}
+
+.mypage-mv a {
+	padding: 10px 15px;
+	margin: 0 10px;
+	border: 1px solid black;
+	border-radius : 15px;
+}
+
+/*modify.jsp*/
+.modify-title {
+	text-align : center;
+}
+
+.modify-container {
+	padding: 30px 0;
+}
+
+.modify-form {
+	width: 70%;
+	margin: auto;
+}
+
+#modifyform input {
+	margin-bottom: 15px;
+}
+
+#modifyform label {
+	margin-bottom: 10px;
+}
+
+/*aptsearch.jsp*/
+.apt-main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.apt-title {
+	font-size: 1.8em;
+	margin-bottom : 15px;
+}
+
+.apt-list-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px; 
+	min-width : 1050px;
+	font-size: 1.5em;
+}
+
+.apt-list-table {
+  border-collapse: separate;
+  border-spacing: 120px 15px;
+}
+
+/*citysearch.jsp*/
+.city-main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.city-list-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px; 
+	min-width : 1050px;
+	font-size: 1.5em;
+}
+
+.city-list-table {
+  border-collapse: separate;
+  border-spacing: 120px 15px;
+}
+
+.city-title {
+	font-size: 1.8em;
+	margin-bottom : 15px;
+}
+
+.select-list {
+	display: flex;
+	justify-content: space-around;
+	width: 40%;
+	margin: 0 auto;
+	
+}

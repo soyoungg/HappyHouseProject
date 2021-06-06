@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.FavoriteRepo">
+
+	<insert id="registLike" parameterType="Like">
+		INSERT INTO favorite
+		VALUES (#{user_id}, #{deal_no})
+	</insert>
+	
+	<delete id="deleteLike" parameterType="map">
+		DELETE 
+		FROM favorite
+		WHERE user_id=#{user_id} and deal_no=#{deal_no}
+	</delete>
+	
+	<select id="listLike" parameterType="String" resultType="String">
+	   SELECT distinct aptname
+		FROM  favorite LEFT JOIN
+        housedeal
+		ON favorite.deal_no = housedeal.no 
+		AND favorite.user_id=#{user_id};
+	</select>
+</mapper>
